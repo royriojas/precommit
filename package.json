@@ -1,0 +1,83 @@
+{
+  "name": "precommit",
+  "version": "0.0.9",
+  "description": "Yet another precommit module that will run tasks defined in a config file or in a `package.json` file, stashing anything that is not supposed to be commited before run the scripts to avoid false positives when running validation like tasks",
+  "main": "lib/hook.js",
+  "scripts": {
+    "beautify": "esbeautifier 'lib/**/*.js' 'bin/**/*.js' 'hook/**/*.js'",
+    "beautify-check": "esbeautifier -k 'lib/**/*.js' 'bin/**/*.js' 'hook/**/*.js'",
+    "eslint": "eslinter 'lib/**/*.js' 'bin/**/*.js' 'hook/**/*.js'",
+    "test": "mocha-runner 'specs/**/*.js'",
+    "cover": "istanbul cover -x 'specs/**/*.js' mocha-runner 'specs/**/*.js' html text-summary",
+    "watch": "npm run cover && watch-spawn -p 'specs/**/*.js' -p 'lib/**/*.js' -p 'hook/**/*.js' -p 'bin/**/*.js' npm run cover",
+    "check": "npm run beautify-check && npm run eslint",
+    "lint": "npm run beautify && npm run eslint",
+    "prepush": "npm run check && npm test",
+    "changelog": "changelogx -f markdown -o ./changelog.md",
+    "do-changelog": "npm run changelog && git add ./changelog.md && git commit -m 'DOC: Generate changelog'",
+    "install-hooks": "prepush install && changelogx install-hook && ./bin/cli.js install",
+    "pre-v": "npm run check",
+    "post-v": "npm run do-changelog && git push --no-verify && git push --tags --no-verify",
+    "bump-major": "npm run pre-v && npm version major -m 'BLD: Release v%s' && npm run post-v",
+    "bump-minor": "npm run pre-v && npm version minor -m 'BLD: Release v%s' && npm run post-v",
+    "bump-patch": "npm run pre-v && npm version patch -m 'BLD: Release v%s' && npm run post-v"
+  },
+  "prepush": {
+    "coloredOuput": true,
+    "tasks": [
+      "npm run prepush"
+    ],
+    "onDirtyState": "ask"
+  },
+  "precommit": {
+    "coloredOuput": true,
+    "tasks": [
+      "npm run check --silent",
+      "npm run test --silent"
+    ],
+    "onDirtyState": "ask"
+  },
+  "bin": {
+    "precommit": "./bin/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/royriojas/precommit"
+  },
+  "license": "MIT",
+  "author": "Roy Riojas (http://royriojas.com)",
+  "devDependencies": {
+    "changelogx": "^1.0.15",
+    "esbeautifier": "^4.0.1",
+    "eslinter": "^2.1.0",
+    "istanbul": "^0.3.17",
+    "mocha-runner": "^1.0.8",
+    "prepush": "^3.0.4",
+    "proxyquire": "^1.6.0",
+    "watch-spawn": "^1.0.3"
+  },
+  "dependencies": {
+    "clix": "^1.1.5",
+    "del": "^1.2.0",
+    "es6-promise": "^2.3.0",
+    "git-toplevel": "^1.1.0",
+    "read-file": "^0.1.2",
+    "read-json-sync": "^1.1.0",
+    "stringformat": "0.0.5",
+    "write": "^0.1.1"
+  },
+  "bugs": {
+    "url": "https://github.com/royriojas/precommit/issues"
+  },
+  "homepage": "https://github.com/royriojas/precommit",
+  "keywords": [
+    "pre-commit",
+    "precommit",
+    "hooks",
+    "git",
+    "hooks",
+    "enforce",
+    "git",
+    "workflow"
+  ]
+}
