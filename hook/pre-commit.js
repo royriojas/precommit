@@ -365,7 +365,11 @@ var doWithStashIf = function ( condition ) {
       } );
     } );
   }
-  return Promise.resolve();
+  return Promise.resolve( {
+    success: true, restoreFn: function () {
+      return Promise.resolve();
+    }
+  } );
 };
 
 var main = function () {
