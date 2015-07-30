@@ -282,7 +282,7 @@ var confirmToProceed = function ( isDirty, onDirtyState, dirtyState ) {
     return ttyConfirm(
       redString( '\n>> The index is not clean, the following files are not staged for commit or were modified after being staged:\n\n' ) +
         yellowString( '    - ' + dirtyState.join( '\n    - ' ) ) +
-        whiteString( '\n\n>> A stash entry will be created and applied after running the tasks for precommit.\nIf some files were modified afted added to stage you might run into conflicts. DO IT AT YOUR OWN RISK!' )
+        whiteString( '\n\n>> A stash entry will be created and applied after running the tasks for precommit to avoid false positives on the `precommit` script' )
     );
   }
   return Promise.resolve();
@@ -341,19 +341,16 @@ var restoreUntracked = function () {
 
 var doWithStashIf = function ( condition ) {
   if ( condition ) {
-    console.log( 'condition', condition );
     return new Promise( function ( resolve /*, reject */ ) {
       var p = getLastStash();
 
       p.then( function ( oldStashId ) {
-        log.log( 'oldStashId:', oldStashId );
         stashChanges().then( function ( stashChangesId ) {
-          log.log( 'stashChangesId:', oldStashId );
+          log.log( 'stash changes: ' + oldStashId );
           if ( oldStashId === stashChangesId ) {
             resolve( { success: false, msg: 'No changes to test' } );
           } else {
             stashStaged().then( function ( stashStagedId ) {
-              log.log( 'stashStagedId', stashStagedId );
               if ( stashStagedId === stashChangesId ) {
                 restoreStashedChanges().then( function () {
                   resolve( {
@@ -362,12 +359,17 @@ var doWithStashIf = function ( condition ) {
                   } );
                 } );
               } else {
+                log.log( 'stash staged: ' + stashStagedId );
                 stashUntracked().then( function ( stashUntrackedId ) {
                   var sameStashAsStaged = stashUntrackedId === stashStagedId;
                   var n = sameStashAsStaged ? '0' : '1';
 
+                  if ( !sameStashAsStaged ) {
+                    log.log( 'stash untracked: ' + stashUntrackedId );
+                  }
+
                   var restoreFn = function () {
-                    log.log( 'restoring previous state' );
+                    log.log( 'restoring previous index state' );
                     var p1 = Promise.resolve();
                     if ( !sameStashAsStaged ) {
                       p1 = p1.then( restoreUntracked );
@@ -425,7 +427,7 @@ var main = function () {
         if ( isDirty ) {
           log.log( '>> files in dirty state \n    - ', dirtyState.join( '\n    - ' ) );
           if ( onDirtyState === 'fail' ) {
-            log.error( '>> Precommit check failed. <<\n\n Refusing do the check on a dirty tree. Please stash or commit your changes\n' );
+            log.error( '>> Precommit check failed. <<\n\n Refusing do the check on a dirty tree. There are changes that are not part of the commit.\n' );
             nodeProcess.exit( 1 );
           }
         }
@@ -433,7 +435,7 @@ var main = function () {
         confirmToProceed( isDirty, onDirtyState, dirtyState ).then( function () {
           doWithStashIf( isDirty ).then( function ( res ) {
             if ( !res.success ) {
-              log.ok( res.msg );
+              log.ok( '>> ' + res.msg );
               nodeProcess.exit( 0 );
             } else {
               var p = runTasks( tasks );
