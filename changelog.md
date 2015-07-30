@@ -1,5 +1,10 @@
 
 # precommit - Changelog
+## v1.0.2
+- **Bug Fixes**
+  - delete git env variables from process. Fixes [#1](https://github.com/royriojas/precommit/issues/1) - [7cc92c7]( https://github.com/royriojas/precommit/commit/7cc92c7 ), [royriojas](https://github.com/royriojas), 29/07/2015 18:18:40
+
+    
 ## v1.0.1
 - **Bug Fixes**
   - execute the precommit scripts when directory not dirty - [757a7a7]( https://github.com/royriojas/precommit/commit/757a7a7 ), [royriojas](https://github.com/royriojas), 29/07/2015 02:47:06
