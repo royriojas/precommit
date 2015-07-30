@@ -8,6 +8,23 @@ nodeProcess.chdir( opts.workingDirectory );
 var path = require( 'path' );
 var env = nodeProcess.env || { };
 
+// getting rid of the environment variables that affect the way git status work
+// when called from a directory different than the one where the precommit module is
+// installed
+var gitVars = [
+  'GIT_PREFIX',
+  'GIT_DIR',
+  'GIT_AUTHOR_NAME',
+  'GIT_AUTHOR_EMAIL',
+  'GIT_AUTHOR_DATE',
+  //'GIT_INDEX_FILE',
+  'GIT_EDITOR'
+];
+
+gitVars.forEach( function ( key ) {
+  delete nodeProcess.env[ key ];
+} );
+
 var readJSON = function ( filePath, options ) {
   return JSON.parse( String( fs.readFileSync( filePath, options ) ).replace( /^\ufeff/g, '' ) );
 };
@@ -247,6 +264,8 @@ var getDirtyState = function () {
   return doExec( 'git status --porcelain' ).then( function ( res ) {
     var status = parsePorcelain( res );
     return status;
+  } ).catch( function ( err ) {
+    console.error( 'precommit error: ', err );
   } );
 };
 
@@ -284,7 +303,7 @@ var getLastStash = function () {
 };
 
 var stashChanges = function () {
-  return execSeq( [ 'git stash save -q --keep-index' ] ).then( getLastStash );
+  return execSeq( [ 'git stash save -q --keep-index' ] ).then( getLastStash ).catch( log.error );
 };
 
 var stashStaged = function () {
@@ -292,6 +311,7 @@ var stashStaged = function () {
 };
 
 var restoreStashedChanges = function () {
+  log.log( 'restoring stashed changes' );
   return execSeq( [ resetHardQ, 'git stash pop --index -q' ] );
 };
 
@@ -321,17 +341,19 @@ var restoreUntracked = function () {
 
 var doWithStashIf = function ( condition ) {
   if ( condition ) {
-
+    console.log( 'condition', condition );
     return new Promise( function ( resolve /*, reject */ ) {
       var p = getLastStash();
 
       p.then( function ( oldStashId ) {
-
+        log.log( 'oldStashId:', oldStashId );
         stashChanges().then( function ( stashChangesId ) {
+          log.log( 'stashChangesId:', oldStashId );
           if ( oldStashId === stashChangesId ) {
             resolve( { success: false, msg: 'No changes to test' } );
           } else {
             stashStaged().then( function ( stashStagedId ) {
+              log.log( 'stashStagedId', stashStagedId );
               if ( stashStagedId === stashChangesId ) {
                 restoreStashedChanges().then( function () {
                   resolve( {
@@ -345,6 +367,7 @@ var doWithStashIf = function ( condition ) {
                   var n = sameStashAsStaged ? '0' : '1';
 
                   var restoreFn = function () {
+                    log.log( 'restoring previous state' );
                     var p1 = Promise.resolve();
                     if ( !sameStashAsStaged ) {
                       p1 = p1.then( restoreUntracked );
