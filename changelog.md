@@ -1,5 +1,14 @@
 
 # precommit - Changelog
+## v1.1.0
+- **Enhancements**
+  - Make onDirtyState default to `stash` - [21a7766]( https://github.com/royriojas/precommit/commit/21a7766 ), [royriojas](https://github.com/royriojas), 30/07/2015 15:22:13
+
+    **BREAKING CHANGE:**
+    
+    Well not really breaking, but this change the previous default value from `ask` to `stash` when the
+    tree contains files that are modified but not staged or untracked
+    
 ## v1.0.3
 - **Enhancements**
   - Remove noisy outputs - [324c37e]( https://github.com/royriojas/precommit/commit/324c37e ), [royriojas](https://github.com/royriojas), 30/07/2015 02:41:43
