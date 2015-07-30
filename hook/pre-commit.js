@@ -404,11 +404,11 @@ var main = function () {
 
   if ( Array.isArray( precommitSection ) ) {
     tasks = precommitSection;
-    onDirtyState = 'ask';
+    onDirtyState = 'stash';
   } else {
     if ( precommitSection !== null && typeof precommitSection !== 'undefined' ) {
       tasks = precommitSection.tasks;
-      onDirtyState = precommitSection.onDirtyState || 'ask';
+      onDirtyState = precommitSection.onDirtyState || 'stash';
     }
   }
 

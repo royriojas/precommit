@@ -49,7 +49,7 @@ or as an object in a `custom.json` file or in `package.json` add the following s
     // fail  => Simply refuse to push something when you have uncommited/untracked files
     // stash => If there are uncommited/untracked files stash them, do the push and restore the stash
     //          This will also move untracked files into the stash
-    "onDirtyState": "ask", // <== fail or stash,
+    "onDirtyState": "ask", // <== ask, fail or stash. Default to stash
     "coloredOuput" : true // <== true or false. If ommited it will try to use the env variable `__CLIX_COLORED_OUTPUT__` (from `clix` module)
   }
 }
@@ -75,8 +75,8 @@ Usage: precommit -c [path/to/config/file] [install|remove]
   -v, --version        Outputs the version number
   -q, --quiet          Show only the summary info - default: false
   --colored-output     Use colored output in logs
-  -c, --config String  Path to your `precommit` config, if not provided will try to use the `package.json` file in your current working directory, expecting an
-                       entry called `precommit`
+  -c, --config String  Path to your `precommit` config, if not provided will try to use the `package.json` file in your
+                       current working directory, expecting an entry called `precommit`
 ```
 
 **Note**: The `colored-output` in the cli is only for logs during installing/removing the hook.

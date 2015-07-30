@@ -29,13 +29,9 @@
     ],
     "onDirtyState": "ask"
   },
-  "precommit": {
-    "coloredOuput": true,
-    "tasks": [
-      "npm run verify --silent"
-    ],
-    "onDirtyState": "ask"
-  },
+  "precommit": [
+    "npm run verify --silent"
+  ],
   "bin": {
     "precommit": "./bin/cli.js"
   },
