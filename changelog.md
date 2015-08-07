@@ -1,5 +1,10 @@
 
 # precommit - Changelog
+## v1.1.2
+- **Bug Fixes**
+  - do not report renamed as dirty state - [941deb5]( https://github.com/royriojas/precommit/commit/941deb5 ), [royriojas](https://github.com/royriojas), 07/08/2015 14:26:41
+
+    
 ## v1.1.1
 - **Build Scripts Changes**
   - Update the beautifier to the latest version - [8d29c2a]( https://github.com/royriojas/precommit/commit/8d29c2a ), [royriojas](https://github.com/royriojas), 07/08/2015 10:54:46
