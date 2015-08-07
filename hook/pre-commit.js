@@ -22,7 +22,8 @@ var gitVars = [
 ];
 
 gitVars.forEach( function ( key ) {
-  delete nodeProcess.env[ key ];
+  delete nodeProcess.env[ key ]
+  ;
 } );
 
 var readJSON = function ( filePath, options ) {
@@ -250,7 +251,7 @@ var parsePorcelain = function ( str ) {
     }
     return seq;
   }, [ ] ).filter( function ( entry ) {
-    return !entry.match( /^A\s/ ) && !entry.match( /^M\s/ );
+    return !entry.match( /^A\s/ ) && !entry.match( /^M\s/ ) && !entry.match( /^D\s/ );
   } );
 
   status.isDirty = status.files.length > 0;
