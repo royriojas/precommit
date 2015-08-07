@@ -251,7 +251,7 @@ var parsePorcelain = function ( str ) {
     }
     return seq;
   }, [ ] ).filter( function ( entry ) {
-    return !entry.match( /^A\s/ ) && !entry.match( /^M\s/ ) && !entry.match( /^D\s/ );
+    return !entry.match( /^[AMDR]\s/ );
   } );
 
   status.isDirty = status.files.length > 0;
