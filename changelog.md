@@ -1,5 +1,14 @@
 
 # precommit - Changelog
+## v1.1.1
+- **Build Scripts Changes**
+  - Update the beautifier to the latest version - [8d29c2a]( https://github.com/royriojas/precommit/commit/8d29c2a ), [royriojas](https://github.com/royriojas), 07/08/2015 10:54:46
+
+    
+- **Bug Fixes**
+  - Do not consider deleted files to calculate the dirty state. Fixes [#2](https://github.com/royriojas/precommit/issues/2) - [fa45725]( https://github.com/royriojas/precommit/commit/fa45725 ), [royriojas](https://github.com/royriojas), 07/08/2015 10:54:27
+
+    
 ## v1.1.0
 - **Enhancements**
   - Make onDirtyState default to `stash` - [21a7766]( https://github.com/royriojas/precommit/commit/21a7766 ), [royriojas](https://github.com/royriojas), 30/07/2015 15:22:13
