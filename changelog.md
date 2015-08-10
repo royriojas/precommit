@@ -1,5 +1,10 @@
 
 # precommit - Changelog
+## v1.1.3
+- **Build Scripts Changes**
+  - Move esbeautifier from dependencies to devDependencies - [de4faf7]( https://github.com/royriojas/precommit/commit/de4faf7 ), [royriojas](https://github.com/royriojas), 09/08/2015 18:20:31
+
+    
 ## v1.1.2
 - **Bug Fixes**
   - do not report renamed as dirty state - [941deb5]( https://github.com/royriojas/precommit/commit/941deb5 ), [royriojas](https://github.com/royriojas), 07/08/2015 14:26:41
