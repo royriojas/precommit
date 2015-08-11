@@ -1,5 +1,10 @@
 
 # precommit - Changelog
+## v1.1.4
+- **Build Scripts Changes**
+  - Update to latest clix - [ecec282]( https://github.com/royriojas/precommit/commit/ecec282 ), [royriojas](https://github.com/royriojas), 11/08/2015 14:29:52
+
+    
 ## v1.1.3
 - **Build Scripts Changes**
   - Move esbeautifier from dependencies to devDependencies - [de4faf7]( https://github.com/royriojas/precommit/commit/de4faf7 ), [royriojas](https://github.com/royriojas), 09/08/2015 18:20:31
