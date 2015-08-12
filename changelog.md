@@ -1,5 +1,10 @@
 
 # precommit - Changelog
+## v1.1.5
+- **Build Scripts Changes**
+  - update clix dep to get nicer log output - [469c0a8]( https://github.com/royriojas/precommit/commit/469c0a8 ), [royriojas](https://github.com/royriojas), 11/08/2015 17:43:54
+
+    
 ## v1.1.4
 - **Build Scripts Changes**
   - Update to latest clix - [ecec282]( https://github.com/royriojas/precommit/commit/ecec282 ), [royriojas](https://github.com/royriojas), 11/08/2015 14:29:52
