@@ -22,8 +22,7 @@ var gitVars = [
 ];
 
 gitVars.forEach( function ( key ) {
-  delete nodeProcess.env[ key ]
-  ;
+  delete nodeProcess.env[ key ]; //esfmt-ignore-line
 } );
 
 var readJSON = function ( filePath, options ) {
@@ -135,35 +134,55 @@ var Promise = ( function () {
 // taken from: https://github.com/noyobo/confirm-simple/blob/master/lib/index.js
 //
 var ttyConfirm = function ( question, callback ) {
+  var domain = require( 'domain' );
+  var d = domain.create();
+
   return new Promise( function ( resolve, reject ) {
 
-    var readline = require( 'readline' );
-    var tty = fs.createReadStream( '/dev/tty', 'utf8' );
-    var r = readline.createInterface( {
-      input: tty,
-      output: nodeProcess.stdout,
-      terminal: false
+    d.on( 'error', function ( err ) {
+      if ( err.code === 'ENXIO' ) {
+        // when using a graphical interface like github
+        // there is no way we can create a tty stream
+        // hence we assume that the user wanted to say yes
+        // at least that will operate on the code
+        console.error( 'could not open TTY... assuming the user wanted to say yes' );
+        callback && callback( 'yes' );
+        resolve();
+      }
     } );
 
-    r.question( question + '\n\n' +
-        whiteString( '>> continue? ' ) +
-        grayString( '(' ) +
-        grayString( 'yes' ) +
-        grayString( '|' ) +
-        whiteString( 'NO' ) +
-        grayString( ') : ' ), function ( answer ) {
+    d.run( function () {
+      var readline = require( 'readline' );
 
-        var yes = answer.trim() === 'yes';
+      var tty = fs.createReadStream( '/dev/tty', 'utf8' );
 
-        callback && callback( null, yes );
-
-        if ( yes ) {
-          resolve( answer );
-        } else {
-          reject();
-        }
-        tty.close();
+      var r = readline.createInterface( {
+        input: tty,
+        output: nodeProcess.stdout,
+        terminal: false
       } );
+
+      r.question( question + '\n\n' +
+          whiteString( '>> continue? ' ) +
+          grayString( '(' ) +
+          grayString( 'yes' ) +
+          grayString( '|' ) +
+          whiteString( 'NO' ) +
+          grayString( ') : ' ), function ( answer ) {
+
+          var yes = answer.trim() === 'yes';
+
+          callback && callback( null, yes );
+
+          if ( yes ) {
+            resolve( answer );
+          } else {
+            reject();
+          }
+          tty.close();
+        } );
+    } );
+
   } );
 };
 
@@ -355,8 +374,7 @@ var doWithStashIf = function ( condition ) {
               if ( stashStagedId === stashChangesId ) {
                 restoreStashedChanges().then( function () {
                   resolve( {
-                    success: false,
-                    msg: 'No staged changes to test'
+                    success: false, msg: 'No staged changes to test'
                   } );
                 } );
               } else {
@@ -392,7 +410,8 @@ var doWithStashIf = function ( condition ) {
     } );
   }
   return Promise.resolve( {
-    success: true, restoreFn: function () {
+    success: true,
+    restoreFn: function () {
       return Promise.resolve();
     }
   } );
