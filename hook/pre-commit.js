@@ -489,4 +489,56 @@ var main = function () {
   } );
 };
 
-main();
+var applyToBranchFn = function ( branch ) {
+  var applyToBranch = precommitSection.applyToBranch;
+  if ( !applyToBranch ) {
+    return true; // apply to all branches no distinction
+  }
+  if ( !Array.isArray( applyToBranch ) ) {
+    applyToBranch = [ applyToBranch ];
+  }
+  return applyToBranch.filter( function ( branchName ) {
+      branchName = (branchName || '').trim();
+      return branchName === branch;
+    } ).length > 0;
+};
+
+var ignoreBranchFn = function ( branch ) {
+  var ignoreBranch = precommitSection.ignoreBranch;
+  if ( !ignoreBranch ) {
+    return false; // do not ignore the branch if no specified in the precommit section
+  }
+
+  if ( !Array.isArray( ignoreBranch ) ) {
+    ignoreBranch = [ ignoreBranch ];
+  }
+
+  return ignoreBranch.filter( function ( branchName ) {
+      branchName = (branchName || '').trim();
+      return branchName === branch;
+    } ).length > 0;
+};
+
+// check if can be applied to the given branch
+doExec( 'git name-rev --name-only HEAD', function ( err, stdout /*, stderr*/ ) {
+  if ( err ) {
+    console.error( 'pre-commit error', err.message );
+    nodeProcess.exit( 1 );
+  }
+  stdout = (stdout || '').trim();
+
+  if ( !stdout ) {
+    console.error( 'could not determine the name of the branch. Stopping' );
+    nodeProcess.exit( 1 );
+  }
+
+  if ( ignoreBranchFn( stdout ) ) {
+    console.log( 'ignore precommit on branch ', stdout );
+    return;
+  }
+
+  if ( applyToBranchFn( stdout ) ) {
+    console.log( 'applying precommit on branch ', stdout );
+    main();
+  }
+} );
