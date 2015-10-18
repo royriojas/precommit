@@ -1,5 +1,10 @@
 
 # precommit - Changelog
+## v1.1.7
+- **Refactoring**
+  - Add the option to apply the precommit only to given branches - [029fb23]( https://github.com/royriojas/precommit/commit/029fb23 ), [royriojas](https://github.com/royriojas), 17/10/2015 20:48:36
+
+    
 ## v1.1.6
 - **Bug Fixes**
   - Make it usable in case a GUI is used to control git - [2eddede]( https://github.com/royriojas/precommit/commit/2eddede ), [royriojas](https://github.com/royriojas), 17/10/2015 19:49:56
