@@ -1,5 +1,10 @@
 
 # precommit - Changelog
+## v1.1.8
+- **Bug Fixes**
+  - properly detect the git directory to ensure the git commands will use the right git info - [f1a2fd8]( https://github.com/royriojas/precommit/commit/f1a2fd8 ), [royriojas](https://github.com/royriojas), 16/12/2015 04:20:02
+
+    
 ## v1.1.7
 - **Refactoring**
   - Add the option to apply the precommit only to given branches - [029fb23]( https://github.com/royriojas/precommit/commit/029fb23 ), [royriojas](https://github.com/royriojas), 17/10/2015 20:48:36
