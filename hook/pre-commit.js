@@ -223,11 +223,11 @@ var spawnCmd = function ( cmd ) {
 var doExec = function ( cmd, cb ) {
   var _exec = require( 'child_process' ).exec;
   return new Promise( function ( resolve, reject ) {
-    _exec( cmd, function ( err, stdout, stderr ) {
+    _exec( cmd, { maxBuffer: Infinity }, function ( err, stdout, stderr ) {
       if ( !err ) {
         resolve( stdout );
       } else {
-        reject( stderr );
+        reject( { err: err, stderr: stderr } );
       }
       cb && cb( err, stdout, stderr );
     } );
@@ -518,6 +518,8 @@ var ignoreBranchFn = function ( branch ) {
       return branchName === branch;
     } ).length > 0;
 };
+
+nodeProcess.chdir( opts.gitDirectory );
 
 // check if can be applied to the given branch
 doExec( 'git name-rev --name-only HEAD', function ( err, stdout /*, stderr*/ ) {
