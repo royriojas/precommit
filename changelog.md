@@ -1,5 +1,10 @@
 
 # precommit - Changelog
+## v1.1.9
+- **Bug Fixes**
+  - only change cwd to gitDirectory if a git command is executed - [6e7b64b]( https://github.com/royriojas/precommit/commit/6e7b64b ), [royriojas](https://github.com/royriojas), 16/12/2015 04:41:30
+
+    
 ## v1.1.8
 - **Bug Fixes**
   - properly detect the git directory to ensure the git commands will use the right git info - [f1a2fd8]( https://github.com/royriojas/precommit/commit/f1a2fd8 ), [royriojas](https://github.com/royriojas), 16/12/2015 04:20:02
