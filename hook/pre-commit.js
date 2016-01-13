@@ -32,17 +32,17 @@ var readJSON = function ( filePath, options ) {
 var config = readJSON( opts.configFile );
 var precommitSection = config.precommit;
 var configPrecommit = precommitSection || { };
-var coloredOuput = configPrecommit.coloredOuput;
+var coloredOutput = configPrecommit.coloredOutput;
 
 // if the coloredOutput was not specified
-if ( typeof coloredOuput === 'undefined' ) {
+if ( typeof coloredOutput === 'undefined' ) {
   // try to use the value of the env variable
-  coloredOuput = env.__CLIX_COLORED_OUTPUT__ === 'true';
+  coloredOutput = env.__CLIX_COLORED_OUTPUT__ === 'true';
 }
 
 var green = function () {
   var args = [ ].slice.call( arguments );
-  if ( !coloredOuput ) {
+  if ( !coloredOutput ) {
     return args;
   }
   args.unshift( '\x1B[33m' );
@@ -52,7 +52,7 @@ var green = function () {
 
 var gray = function () {
   var args = [ ].slice.call( arguments );
-  if ( !coloredOuput ) {
+  if ( !coloredOutput ) {
     return args;
   }
   args.unshift( '\x1B[90m' );
@@ -62,7 +62,7 @@ var gray = function () {
 
 var red = function () {
   var args = [ ].slice.call( arguments );
-  if ( !coloredOuput ) {
+  if ( !coloredOutput ) {
     return args;
   }
   args.unshift( '\x1B[31m' );
@@ -72,7 +72,7 @@ var red = function () {
 
 var white = function () {
   var args = [ ].slice.call( arguments );
-  if ( !coloredOuput ) {
+  if ( !coloredOutput ) {
     return args;
   }
   args.unshift( '\x1B[37m' );
@@ -82,7 +82,7 @@ var white = function () {
 
 var yellow = function () {
   var args = [ ].slice.call( arguments );
-  if ( !coloredOuput ) {
+  if ( !coloredOutput ) {
     return args;
   }
   args.unshift( '\x1B[33m' );

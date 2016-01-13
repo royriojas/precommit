@@ -50,7 +50,7 @@ or as an object in a `custom.json` file or in `package.json` add the following s
     // stash => If there are uncommited/untracked files stash them, do the push and restore the stash
     //          This will also move untracked files into the stash
     "onDirtyState": "ask", // <== ask, fail or stash. Default to stash
-    "coloredOuput" : true // <== true or false. If ommited it will try to use the env variable `__CLIX_COLORED_OUTPUT__` (from `clix` module)
+    "coloredOutput" : true // <== true or false. If ommited it will try to use the env variable `__CLIX_COLORED_OUTPUT__` (from `clix` module)
   }
 }
 ```
@@ -88,9 +88,9 @@ If you want to enable the colored logs in the actual precommit hook, please incl
 {
   "precommit": {
     // the tasks to run
-    "tasks" : [ "grunt precommit" ],
+    "tasks": [ "grunt precommit" ],
     "onDirtyState": "ask",
-    "coloredOuput" : true // or false
+    "coloredOutput": true // or false
   }
 }
 ```
