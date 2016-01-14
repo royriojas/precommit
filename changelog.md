@@ -1,5 +1,10 @@
 
 # precommit - Changelog
+## v1.2.0
+- **undefined**
+  - 'coloredOuput' => 'coloredOutput' - [6152649]( https://github.com/royriojas/precommit/commit/6152649 ), [Guido Kessels](https://github.com/Guido Kessels), 13/01/2016 10:42:02
+
+    
 ## v1.1.9
 - **Bug Fixes**
   - only change cwd to gitDirectory if a git command is executed - [6e7b64b]( https://github.com/royriojas/precommit/commit/6e7b64b ), [royriojas](https://github.com/royriojas), 16/12/2015 04:41:30
