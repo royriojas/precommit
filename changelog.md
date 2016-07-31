@@ -1,5 +1,10 @@
 
 # precommit - Changelog
+## v1.2.1
+- **Build Scripts Changes**
+  - update packages to prevent issues with deprecated packages - [cc0ff38]( https://github.com/royriojas/precommit/commit/cc0ff38 ), [Roy Riojas](https://github.com/Roy Riojas), 31/07/2016 04:28:48
+
+    
 ## v1.2.0
 - **undefined**
   - 'coloredOuput' => 'coloredOutput' - [6152649]( https://github.com/royriojas/precommit/commit/6152649 ), [Guido Kessels](https://github.com/Guido Kessels), 13/01/2016 10:42:02
