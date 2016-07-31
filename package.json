@@ -42,22 +42,21 @@
   "license": "MIT",
   "author": "Roy Riojas (http://royriojas.com)",
   "devDependencies": {
-    "changelogx": "^1.0.15",
+    "changelogx": "^2.0.1",
     "esbeautifier": "^4.2.5",
     "eslinter": "^2.1.0",
     "istanbul": "^0.3.17",
     "mocha-runner": "^1.0.8",
     "prepush": "^3.0.4",
     "proxyquire": "^1.6.0",
-    "watch-spawn": "^1.0.3"
+    "watch-spawn": "^2.0.0"
   },
   "dependencies": {
-    "clix": "^2.0.3",
+    "clix": "^2.0.16",
     "del": "^1.2.0",
-    "es6-promise": "^2.3.0",
+    "es6-promise": "^3.2.1",
     "git-toplevel": "^1.1.0",
-    "read-file": "^0.1.2",
-    "read-json-sync": "^1.1.0",
+    "read-file": "^0.2.0",
     "stringformat": "0.0.5",
     "write": "^0.1.1"
   },
