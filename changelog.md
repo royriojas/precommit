@@ -1,5 +1,10 @@
 
 # precommit - Changelog
+## v1.2.2
+- **Bug Fixes**
+  - regression when upgrading read-file - [ba35402]( https://github.com/royriojas/precommit/commit/ba35402 ), [Roy Riojas](https://github.com/Roy Riojas), 31/07/2016 05:12:05
+
+    
 ## v1.2.1
 - **Build Scripts Changes**
   - update packages to prevent issues with deprecated packages - [cc0ff38]( https://github.com/royriojas/precommit/commit/cc0ff38 ), [Roy Riojas](https://github.com/Roy Riojas), 31/07/2016 04:28:48
